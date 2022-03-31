@@ -1,0 +1,29 @@
+UseEffect:
+    1. UseEffect can return anything even a  function. when we return a function. At the first load it wont execute but when everr we 
+       sideeffect / effect in useEffect it will return /execute the function. better use for debouncing.
+       
+       useEffect(()=>{
+            const cleanup = setTimeout(() => {
+            console.log("useEffect Called")
+            setFormIsValid(
+                enteredEmail.includes('@') && enteredPassword.trim().length > 6
+            );
+            }, 500);
+
+            return () =>{
+            console.log("Cleanup");
+            // it does not run at very first time load but it run before evry sideeffect
+            clearTimeout(cleanup)
+            }
+        },[enteredEmail,enteredPassword]);
+
+If you’re familiar with React class lifecycle methods, you can think of useEffect Hook as componentDidMount,
+     componentDidUpdate, and componentWillUnmount combined.
+-------------
+
+UseReducer:
+
+    Sometime you have more complex state - for example if i got multiple states multiple ways of changing it or dependencies to other state.
+    useState() the become often hard or error-prone to use the means its easy to write bad, insufficent or buggy code in such scenarios.
+
+    UseReducer() can be used as replacement for useState() if you need more powwerful state management.

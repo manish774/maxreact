@@ -1,0 +1,46 @@
+Lumicons by vantler 
+Icon Suite made for Windows 
+
+---
+
+# Contents
+
+* Symbolic Icons, Windows System Icons, Folder Icon Set (Yellow), Adobe CC Icons, Office Icons, Various Programs
+*  Quick install tools (dll file, registry changes, icon rebuilder)
+* Instructions  
+
+---
+
+# How to: 
+
+## Change system icons
+* Use Customizer God to hand-pick what icons to customize. 
+* Quick Install:  Take ownership, rename & replace imageres.dll in
+   >> Note: not for beginners, can bork your system if you rename without replacing
+   1. Double click on Add_Take_Ownership reg file (adds it to your context menu)
+   2. Navigate to `C:\Windows\System32` 
+   3. Search & Rename: imageres.dll to imageres.dll.backup
+   4. Copy paste included imageres.dll from Quick Install folder
+   5. Refresh the cache (instructions below) 
+
+## Change folder icons   
+* Right-click > Customize > Change Icon
+
+If there's no customize option  
+* Use Resource Hacker > Action > Replace Icon
+
+##  Apply customized program icon everywhere (taskbar, startmenu, etc)
+* Navigate to:  `C:\ProgramData\Microsoft\Windows\Start Menu\Programs`
+* Change icons from there 
+* Drag to pin on the taskbar
+
+## Refresh the cache
+
+* Open Task Manager > File Explorer > Restart 
+* Option 2: Rename refreshicons.ee to refreshicons.exe c/o Mr. Blade
+* Try a full reboot if nothing happens 
+
+---
+
+Shared under Creative Commons License: 
+Attribution-NonCommercial-ShareAlike 4.0 International
