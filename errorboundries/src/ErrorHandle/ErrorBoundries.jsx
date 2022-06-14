@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-
+import classes from './Errors.module.css'
 export default class ErrorBoundries extends Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false };
+        this.state = { hasError: false,errorMsg:"" };
       }
     
       static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI.
-        return { hasError: true };
+        console.log(error)
+        return { hasError: true,errorMsg:error };
       }
     
       componentDidCatch(error, errorInfo) {
@@ -17,9 +18,10 @@ export default class ErrorBoundries extends Component {
       }
     
       render() {
+        console.log(this.state)
         if (this.state.hasError) {
           // You can render any custom fallback UI
-          return <h1>Something went wrong.</h1>;
+          return <h3 className={classes.red}>{this.state.errorMsg.message}</h3>;
         }
     
         return this.props.children; 

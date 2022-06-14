@@ -15,6 +15,12 @@ function App() {
       <ErrorBoundries>
         <User name="ABCD"/>
       </ErrorBoundries>
+      <ErrorBoundries>
+        <User name="BCD"/>
+      </ErrorBoundries>
+      <ErrorBoundries>
+        <User name="BCD"/>
+      </ErrorBoundries>
     </div>
   );
 }
