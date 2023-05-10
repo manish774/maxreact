@@ -1,9 +1,16 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-
+import { UserContextProvider } from "./store/UserContext";
+import User from "./View/User";
+import UserInfo from "./View/UserInfo";
 function App() {
-  return <div className="App"></div>;
+  return (
+    <UserContextProvider>
+      <div className="App">
+        <User />
+        <UserInfo />
+      </div>
+    </UserContextProvider>
+  );
 }
 
 export default App;
