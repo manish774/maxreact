@@ -11,16 +11,15 @@ function App() {
     <div className="App">
       <Header />
       <Switch>
-        
         <Route path='/welcome'>
           <Welcome />
         </Route>
-        <Route path='/products'>
+        <Route path='/products' exact>
           <Products />
         </Route>
         <Route path='/products/:productId/:id'>
           <ProductDetails />
-        </Route>
+        </Route> 
       </Switch>
     </div>
   );

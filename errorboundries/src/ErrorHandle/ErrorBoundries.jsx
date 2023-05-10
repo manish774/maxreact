@@ -8,7 +8,7 @@ export default class ErrorBoundries extends Component {
     
       static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI.
-        console.log(error)
+        
         return { hasError: true,errorMsg:error };
       }
     
@@ -18,7 +18,7 @@ export default class ErrorBoundries extends Component {
       }
     
       render() {
-        console.log(this.state)
+       
         if (this.state.hasError) {
           // You can render any custom fallback UI
           return <h3 className={classes.red}>{this.state.errorMsg.message}</h3>;

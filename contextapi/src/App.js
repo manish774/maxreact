@@ -7,8 +7,8 @@ import "./App.css";
 function App() {
   return (
     <UserProvider>
-      <Users/>
-      <Child/>
+      <Users />
+      <Child />
     </UserProvider>
   );
 }

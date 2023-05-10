@@ -7,18 +7,43 @@ function App() {
 
   
 
-  const getData = async () =>{
+  const getData = async (obj) =>{
     try{
-      const callService = await fetch('https://api.github.com/users')
+      const callService = await fetch(obj.url)
       const data = await callService.json();
-      setUsers(data)
+     // setUsers(data)
+     obj.callback();
     }catch(e){
       console.log(e.message)
     }   
+  };
+  const userss = () =>{
+    console.log("abc")
+  }
+
+  const carts = () =>{
+    console.log("cart")
   }
 
   useEffect(() => {
-    getData()
+    let obj = {
+      url: 'https://api.github.com/users',
+      callback: userss
+    }
+
+    if(true){
+      obj = {
+        url: 'https://api.github.com/users',
+        callback: carts
+      }
+    }
+    
+    obj = {
+      url: 'https://api.github.com/users/1',
+      callback: carts
+    }
+
+    getData(obj)
     
   }, []);
 
@@ -34,6 +59,7 @@ function App() {
   }
   const debounce = debounceData(300,getData)
   const usersList = users.map(user=><li key={user.login}>{user.login}</li>)
+  console.log(usersList)
   return (
     <div className="App">
       <ul>{usersList}</ul>

@@ -4,23 +4,11 @@ import User from './User';
 import ErrorBoundries from './ErrorHandle/ErrorBoundries';
 
 function App() {
+  const arrList = ['ABC','manish','BCD'].map(list=><ErrorBoundries key={list}><User name={list}/></ErrorBoundries>);
+  
   return (
     <div className="App">
-      <ErrorBoundries>
-        <User name="mannsh"/>
-      </ErrorBoundries>
-      <ErrorBoundries>
-        <User name="ABC"/>
-      </ErrorBoundries>
-      <ErrorBoundries>
-        <User name="ABCD"/>
-      </ErrorBoundries>
-      <ErrorBoundries>
-        <User name="BCD"/>
-      </ErrorBoundries>
-      <ErrorBoundries>
-        <User name="BCD"/>
-      </ErrorBoundries>
+      {arrList}
     </div>
   );
 }
