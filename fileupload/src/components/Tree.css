@@ -1,0 +1,46 @@
+.tree-node {
+  position: relative;
+  margin-left: 20px;
+}
+
+.tree-child {
+  position: relative;
+  margin-left: 20px;
+}
+
+.tree-level-1 {
+  background-color: #e0e0e0;
+}
+
+.tree-level-2 {
+  background-color: #d0d0d0;
+}
+
+.tree-level-3 {
+  background-color: #c0c0c0;
+}
+
+.tree-node::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background-image: url("https://cdn-icons-png.flaticon.com/128/3767/3767084.png"); /* Replace with your folder icon */
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.tree-node.collapsed::before {
+  background-image: url("https://cdn-icons-png.flaticon.com/128/3767/3767084.png"); /* Replace with your collapsed folder icon */
+}
+
+.tree-node:last-child::before {
+  height: 100%;
+}
+
+.node-name {
+  display: inline-block;
+  margin-left: 10px;
+}
