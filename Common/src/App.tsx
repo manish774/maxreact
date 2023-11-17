@@ -4,37 +4,27 @@ import "./style.css";
 import Table from "./components/Table";
 import Cards from "./components/Cards";
 import { ColumnProps } from "./Model/TableModel";
-
-interface tableConfig {
-  title: JSX.Element;
-  columns: ColumnProps[];
-}
+import "./Neu/default.css";
+import { tableConfig } from "./Model/Default";
 const App = () => {
   const [selectedRow, setSelectedRow] = useState();
+
   const onClickName = (param: any) => {
     setSelectedRow({ ...param });
   };
 
-  const getDeepDetails = () => {};
+  const getDeepDetails = (param: any) => {
+    setSelectedRow({ ...param });
+  };
   const tableConfig: tableConfig = {
     title: <h3>Beautiful title</h3>,
     columns: [
       {
         id: "name",
         name: "User name",
-        render: (item: any) => {
-          return (
-            <a href="#" onClick={() => onClickName(item)}>
-              {item?.name}
-            </a>
-          );
-        },
+
         searchable: true,
         sortable: true,
-        hoverAction: [
-          { name: "Show details", oncilck: getDeepDetails },
-          { name: "Show", oncilck: getDeepDetails },
-        ],
       },
       {
         id: "age",
@@ -56,6 +46,10 @@ const App = () => {
         id: "amount",
         name: "Value",
         searchable: true,
+        hoverAction: [
+          { name: "Show details", onclick: (item) => getDeepDetails(item) },
+          { name: "Show", onclick: (item) => getDeepDetails(item) },
+        ],
       },
     ],
   };
@@ -63,8 +57,20 @@ const App = () => {
   const listConfig = [
     {
       id: "img",
+      name: "Image",
       render: (item: any) => {
         return <img src={item?.img} height="20px" width="20px" />;
+      },
+    },
+    {
+      id: "age",
+      name: "Age",
+    },
+    {
+      id: "amount",
+      name: "Percentage Covered",
+      render: (item: any) => {
+        return `${Math.round(item?.amount / 100)}%`;
       },
     },
   ];

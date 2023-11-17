@@ -24,6 +24,7 @@ module.exports = {
           },
         ],
       },
+
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader", "sass-loader"],
@@ -35,6 +36,20 @@ module.exports = {
       {
         test: /\.(woff(2)?|eot|ttf|otf|svg)$/i,
         type: "asset/inline",
+      },
+      {
+        test: /\.(jpg|png|svg|gif)$/,
+        loader: "url-loader",
+        options: {
+          limit: 25000,
+        },
+      },
+      {
+        test: /\.(jpg|png|svg|gif)$/,
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[hash].[ext]",
+        },
       },
     ],
   },

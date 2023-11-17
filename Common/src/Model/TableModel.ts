@@ -1,6 +1,8 @@
+import { ThemeMode } from "./Default";
+
 export interface HoverActionProp {
   name: string;
-  oncilck: () => void;
+  onclick: (item: any) => any;
 }
 export interface ColumnProps {
   render?: (item: any) => JSX.Element;
@@ -15,6 +17,7 @@ export interface TableProps {
   records: any[];
   pageSize: number;
   config: {
+    mode?: ThemeMode;
     columns: ColumnProps[];
     title: any;
   };

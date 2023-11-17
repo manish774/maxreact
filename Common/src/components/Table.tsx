@@ -5,7 +5,11 @@ import "../Neu/default.css";
 import { paginationOptions } from "../utils/TableUtils";
 import { ASC, DESC } from "../utils/Index";
 import { TableProps, ColumnProps } from "../Model/TableModel";
-
+import TableRows from "./TableRows";
+import { useDebounce } from "../hooks/hooks";
+import Toggle from "./Toggle";
+import { ThemeMode } from "../Model/Default";
+// import icon from "../Assets/icons/loader.gif";
 const Table = ({ records, config }: TableProps) => {
   const [currentPagination, setCurrentPagination] = useState<any>(1);
   const [currentRecord, setCurrentRecords] = useState<any>([]);
@@ -14,16 +18,21 @@ const Table = ({ records, config }: TableProps) => {
   const [columnSortState, setColumnSortState] = useState<any>({});
   const [columnNames, setColumnNames] = useState<any>();
   const [itemPerPage, setItemPerPage] = useState(paginationOptions[1]);
+  const [searchText, setSearchText] = useState<string>("");
+  const debounceSearch = useDebounce(searchText, 1000);
+  const [searchInputLoading, setSearchInputLoading] = useState(true);
+  const [theme, setTheme] = useState<ThemeMode>("light");
+  const debounceTheme = useDebounce(theme, 2000);
   const [totalPage, setTotalPage] = useState(
     Math.ceil(completeRecord?.length / itemPerPage)
   );
+
   const [currentIndexes, setCurrentIndexes] = useState({
     startIndex: 0,
     offset: itemPerPage,
   });
 
   const [find, setFind] = useState<string>(""); //to-do: use it in useEffect
-  const [showRowOptions, setShowRowOptions] = useState(-1);
 
   const { columns, title } = config; //To-do : make column name form this column and values from column render
 
@@ -38,9 +47,9 @@ const Table = ({ records, config }: TableProps) => {
 
   useEffect(() => {
     const sortColumnObject: any = {};
-    sortableColumns.forEach((col: any) => {
-      sortColumnObject[col] = ASC;
-    }, []);
+    // sortableColumns.forEach((col: any) => {
+    //   sortColumnObject[col] = ASC;
+    // }, []);
 
     setColumnSortState((prevColumnSortState: any) => {
       return { ...prevColumnSortState, ...sortColumnObject };
@@ -54,12 +63,9 @@ const Table = ({ records, config }: TableProps) => {
           onClick={() => {
             if (sortableColumns.includes(rec?.id)) {
               sortColumn(rec?.id, columnSortState[rec?.id]);
-              setColumnSortState((prevColumnSortState: any) => {
-                return {
-                  ...prevColumnSortState,
-                  [rec?.id]: columnSortState[rec?.id] === ASC ? DESC : ASC,
-                };
-              });
+              setColumnSortState(() => ({
+                [rec?.id]: columnSortState[rec?.id] === ASC ? DESC : ASC,
+              }));
             }
           }}
           className={`sort ${columnSortState[rec?.id]}`}
@@ -94,26 +100,30 @@ const Table = ({ records, config }: TableProps) => {
     setCurrentRecords(paginatedRecords);
   }, [currentPagination, completeRecord, currentIndexes]);
 
+  useEffect(() => {
+    if (searchText) {
+      const newRecords = records?.filter((rec: any) => {
+        const searchValue = searchText?.toString().toLowerCase();
+        return searchableColumns.some((column) => {
+          const columnValue = rec[column]?.toString()?.toLowerCase();
+          return columnValue?.includes(searchValue);
+        });
+      });
+      setCompleteRecord(newRecords);
+      setTotalPage(getTotalPage(newRecords));
+      setRowCount(newRecords?.length);
+    } else {
+      setCompleteRecord(records);
+      setCurrentIndexes({ startIndex: 0, offset: itemPerPage });
+      setTotalPage(getTotalPage(records));
+      setRowCount(records?.length);
+    }
+  }, [debounceSearch, records, searchableColumns, itemPerPage]);
+
   const searchInTable = useCallback(
     (e: any) => {
       setCurrentPagination(1);
-      if (e?.target?.value) {
-        const newRecords = records?.filter((rec: any) => {
-          const searchValue = e?.target?.value?.toString().toLowerCase();
-          return searchableColumns.some((column) => {
-            const columnValue = rec[column]?.toString()?.toLowerCase();
-            return columnValue?.includes(searchValue);
-          });
-        });
-        setCompleteRecord(newRecords);
-        setTotalPage(getTotalPage(newRecords));
-        setRowCount(newRecords?.length);
-      } else {
-        setCompleteRecord(records);
-        setCurrentIndexes({ startIndex: 0, offset: itemPerPage });
-        setTotalPage(getTotalPage(records));
-        setRowCount(records?.length);
-      }
+      setSearchText(e?.target?.value);
     },
     [columnNames, itemPerPage]
   );
@@ -125,32 +135,7 @@ const Table = ({ records, config }: TableProps) => {
   };
 
   const createCellContent = (record: any, column: ColumnProps) => {
-    if (column?.render) {
-      const isRowSelected = showRowOptions === record.id;
-      return (
-        <td style={{ textAlign: "left" }}>
-          {column?.render(record)}
-          <span style={{ float: "right" }}>
-            {column?.hoverAction ? (
-              <div>
-                <div onClick={() => setShowRowOptions(record?.id)}>...</div>
-                {isRowSelected && (
-                  <>
-                    {column?.hoverAction.map((option) => (
-                      <option>{option.name}</option>
-                    ))}
-                  </>
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-          </span>
-        </td>
-      );
-    } else {
-      return <td>{record[column?.id]}</td>;
-    }
+    return <TableRows record={record} column={column} />;
   };
 
   const rows = currentRecord?.map((record: any) => {
@@ -160,23 +145,44 @@ const Table = ({ records, config }: TableProps) => {
   const changeItemPerPage = (e: any) => {
     setItemPerPage(parseInt(e?.target?.value));
   };
-  const clearInput = () => {};
+  const clearInput = () => {
+    setSearchText("");
+  };
 
   useEffect(() => {
     setTotalPage(Math.ceil(completeRecord?.length / itemPerPage));
   }, [itemPerPage, currentRecord]);
+
+  const changeTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
   return (
-    <div className="table-container">
+    <div className={`table-container ${`theme-${theme}`}`}>
       <div className="footer-container">
         <div className="table-title">{title}</div>
+        <div>
+          {config?.mode && (
+            <div>
+              <Toggle
+                style={{ position: "relative", top: "0px" }}
+                label="Mode"
+                onChangeTheme={changeTheme}
+              />
+            </div>
+          )}
+        </div>
         <div className="table-search">
           <div className="input-container" style={{ textAlign: "right" }}>
             <input
               className="search"
-              onBlur={searchInTable}
+              onChange={searchInTable}
               placeholder="search"
+              value={searchText}
             />
-            <button className="clear-button" onClick={clearInput}>
+            <button
+              className={`clear-button ${!searchText && "display-none"}`}
+              onClick={clearInput}
+            >
               &times;
             </button>
           </div>

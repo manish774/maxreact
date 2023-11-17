@@ -1,11 +1,25 @@
-.table-container {
+.table-container,
+.theme-light {
   margin: 5px;
   padding: 15px;
   height: 100%;
-  border: 1px solid gray;
+  background-color: white;
+  transition: color 2s ease;
+  transition: background 2s ease;
   border-radius: 5px;
   .table-main {
-    min-height: 400px;
+  }
+
+  .clear-button {
+    position: relative;
+    background-color: rgba(255, 0, 0, 0);
+    left: -30px;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .display-none {
+    visibility: hidden;
   }
   table {
     width: 100%;
@@ -31,6 +45,86 @@
 
   th {
     background-color: #f0f0f0;
+  }
+
+  tr:hover {
+    background-color: #e0e0e0;
+  }
+  .sort.asc::after {
+    content: " \2191";
+  }
+  .sort.desc::after {
+    content: " \2193";
+  }
+  .drop-options {
+    height: 20px;
+    margin: 5px;
+  }
+  .table-pagination {
+    text-align: center;
+  }
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .row-count {
+      display: inline-block;
+    }
+
+    .table-pagination {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.theme-dark {
+  color: white !important;
+  background-color: #28282b;
+  transition: color 2s ease;
+  transition: background 2s ease;
+  .table-main {
+    min-height: 400px;
+  }
+
+  .clear-button {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    left: -30px;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .display-none {
+    visibility: hidden;
+  }
+  table {
+    width: 100%;
+    margin: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #28282b;
+    color: white;
+    box-shadow: 5px 5px 15px #141414, -5px -5px 15px #0f0c0c;
+    transition: color 2s ease;
+    transition: background 2s ease;
+    tbody {
+      max-height: 500px;
+    }
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+  }
+
+  th {
+    background-color: #28282b;
   }
 
   tr:hover {
