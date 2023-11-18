@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import DATA from "./mocks/data.json";
+import trip from "./mocks/Trip.json";
 import "./style.css";
 import Table from "./components/Table";
 import Cards from "./components/Cards";
-import { ColumnProps } from "./Model/TableModel";
-import "./Neu/default.css";
-import { tableConfig } from "./Model/Default";
+import { ColumnProps, tableConfig } from "./Model/Default";
+import "./Neu/default.scss";
+
 const App = () => {
   const [selectedRow, setSelectedRow] = useState();
-
+  const [data, setData] = useState(trip);
   const onClickName = (param: any) => {
     setSelectedRow({ ...param });
   };
@@ -16,7 +17,17 @@ const App = () => {
   const getDeepDetails = (param: any) => {
     setSelectedRow({ ...param });
   };
+
+  const deleteRecord = (record: any) => {
+    //setData((prev) => data.filter((d) => d.id !== record.id));
+  };
+
+  // useEffect(() => {
+
+  // }, [data, deleteRecord]);
   const tableConfig: tableConfig = {
+    paginationRequired: true,
+    showHeaderCount: false,
     title: <h3>Beautiful title</h3>,
     columns: [
       {
@@ -25,6 +36,10 @@ const App = () => {
 
         searchable: true,
         sortable: true,
+        hoverAction: [
+          { name: "Show details", onclick: (item) => getDeepDetails(item) },
+          { name: "Show", onclick: (item) => getDeepDetails(item) },
+        ],
       },
       {
         id: "age",
@@ -47,8 +62,7 @@ const App = () => {
         name: "Value",
         searchable: true,
         hoverAction: [
-          { name: "Show details", onclick: (item) => getDeepDetails(item) },
-          { name: "Show", onclick: (item) => getDeepDetails(item) },
+          { name: "Delete record", onclick: (item) => deleteRecord(item) },
         ],
       },
     ],
@@ -75,17 +89,54 @@ const App = () => {
     },
   ];
 
+  // __________________________________
+  // Trip
+  const tripConfig: tableConfig = {
+    paginationRequired: true,
+    showHeaderCount: false,
+    title: <h3>Beautiful title</h3>,
+    columns: [
+      {
+        id: "name",
+        name: "User name",
+        searchable: true,
+        sortable: true,
+        hoverAction: [
+          { name: "Show details", onclick: (item) => getDeepDetails(item) },
+        ],
+      },
+      {
+        id: "timing",
+        name: "Open Time",
+      },
+      {
+        id: "day",
+        name: "Day To visit",
+        sortable: true,
+      },
+      {
+        id: "activities",
+        name: "Activities to do",
+
+        render: (item: any) =>
+          item?.activities?.map((activity: any) => {
+            return <li>{activity}</li>;
+          }),
+      },
+    ],
+  };
+  // ____________________________________
   return (
     <div style={{ display: "flex" }}>
       <div style={{ width: "60%" }}>
-        <Table records={DATA || []} pageSize={10} config={tableConfig} />
+        {/* <Table records={data || []} pageSize={10} config={tableConfig} /> */}
+        <Table records={data || []} pageSize={10} config={tripConfig} />
       </div>
       <div style={{ width: "30%" }}>
         {selectedRow && (
           <Cards
             dictionary={selectedRow}
             listHeading={{ name: "User stat", value: "values" }}
-            config={listConfig}
           />
         )}
       </div>

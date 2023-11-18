@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { selectSubarray, sortRecords } from "../utils/Index";
-import "./Table.css";
-import "../Neu/default.css";
+import "./Table.scss";
+import "../Neu/default.scss";
 import { paginationOptions } from "../utils/TableUtils";
 import { ASC, DESC } from "../utils/Index";
-import { TableProps, ColumnProps } from "../Model/TableModel";
+
+import { TableProps, ColumnProps, ThemeMode } from "../Model/Default";
 import TableRows from "./TableRows";
 import { useDebounce } from "../hooks/hooks";
 import Toggle from "./Toggle";
-import { ThemeMode } from "../Model/Default";
+import Input from "./generic/Input";
+
 // import icon from "../Assets/icons/loader.gif";
 const Table = ({ records, config }: TableProps) => {
   const [currentPagination, setCurrentPagination] = useState<any>(1);
@@ -114,7 +116,7 @@ const Table = ({ records, config }: TableProps) => {
       setRowCount(newRecords?.length);
     } else {
       setCompleteRecord(records);
-      setCurrentIndexes({ startIndex: 0, offset: itemPerPage });
+      setCurrentIndexes({ startIndex: 0, offset: itemPerPage - 1 });
       setTotalPage(getTotalPage(records));
       setRowCount(records?.length);
     }
@@ -205,25 +207,27 @@ const Table = ({ records, config }: TableProps) => {
       </div>
       <div className="footer-container">
         <div className="row-count">Total records ({rowCount})</div>
-        <div className="table-pagination">
-          <div className="input-container">
-            <input
-              value={currentPagination}
-              type="number"
-              onChange={handleInputChange}
-              max={totalPage}
-              min={1}
-            />
-            <span style={{ marginLeft: "5px" }}>out of {totalPage}</span>
+        {config?.paginationRequired && (
+          <div className="table-pagination">
+            <div className="input-container">
+              <Input
+                onchangeHandler={handleInputChange}
+                type="number"
+                max={totalPage}
+                min={1}
+                value={currentPagination}
+              />
+              <span style={{ marginLeft: "5px" }}>of {totalPage}</span>
+            </div>
           </div>
-        </div>
+        )}
         <div className="input-container">
           <select onChange={changeItemPerPage}>
             {paginationOptions.map((page) => (
               <option selected={itemPerPage === page}>{page}</option>
             ))}
           </select>
-          <span style={{ marginLeft: "5px" }}>Item per page {totalPage}</span>
+          <span style={{ marginLeft: "5px" }}>Item per page </span>
         </div>
       </div>
     </div>

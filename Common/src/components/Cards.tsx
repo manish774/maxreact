@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Table.css";
+import "./Table.scss";
 interface CardProps {
   listHeading: { name: string; value: string };
   dictionary: any;
@@ -53,6 +53,7 @@ const Cards = ({ listHeading, dictionary, config }: CardProps) => {
   const closeList = () => {
     setDataObject("");
   };
+
   return (
     dataObject && (
       <div className="table-container">

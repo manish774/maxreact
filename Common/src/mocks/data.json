@@ -8014,5 +8014,37 @@
     "img": "https://assets-netstorage.groww.in/mf-assets/logos/birla_groww.png",
     "amount": 3249.4498,
     "scheme_name": "Aditya Birla Sun Life Digital India Fund Direct Growth"
+  },
+  {
+    "id": 1001,
+    "name": "Manish",
+    "age": 496,
+    "img": "https://assets-netstorage.groww.in/mf-assets/logos/birla_groww.png",
+    "amount": 3249.4498,
+    "scheme_name": "Aditya Birla Sun Life Digital India Fund Direct Growth"
+  },
+  {
+    "id": 1000,
+    "name": "Priya",
+    "age": 496,
+    "img": "https://assets-netstorage.groww.in/mf-assets/logos/birla_groww.png",
+    "amount": 3249.4498,
+    "scheme_name": "Aditya Birla Sun Life Digital India Fund Direct Growth"
+  },
+  {
+    "id": 1000,
+    "name": "Aaaa",
+    "age": 496,
+    "img": "https://assets-netstorage.groww.in/mf-assets/logos/birla_groww.png",
+    "amount": 3249.4498,
+    "scheme_name": "Aditya Birla Sun Life Digital India Fund Direct Growth"
+  },
+  {
+    "id": 1003,
+    "name": "test",
+    "age": 496,
+    "img": "https://assets-netstorage.groww.in/mf-assets/logos/birla_groww.png",
+    "amount": 3249.4498,
+    "scheme_name": "Aditya Birla Sun Life Digital India Fund Direct Growth"
   }
 ]

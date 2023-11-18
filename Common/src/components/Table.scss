@@ -1,13 +1,21 @@
+$background-light: white;
+$background-dark: #28282b;
+$text-light: #000;
+$text-dark: white;
+$shadow-light: #c4c4c4;
+$shadow-dark: #141414;
+
 .table-container,
 .theme-light {
   margin: 5px;
   padding: 15px;
   height: 100%;
-  background-color: white;
-  transition: color 2s ease;
-  transition: background 2s ease;
+  background-color: $background-light;
+  transition: color 2s ease, background 2s ease;
   border-radius: 5px;
+
   .table-main {
+    // Add your styles for table-main here
   }
 
   .clear-button {
@@ -18,9 +26,11 @@
     cursor: pointer;
     z-index: 10;
   }
+
   .display-none {
     visibility: hidden;
   }
+
   table {
     width: 100%;
     margin: 10px;
@@ -29,7 +39,8 @@
     border-radius: 5px;
     overflow: hidden;
     background: #f0f0f0;
-    box-shadow: 5px 5px 15px #c4c4c4, -5px -5px 15px #ffffff;
+    box-shadow: 5px 5px 15px $shadow-light, -5px -5px 15px #ffffff;
+
     tbody {
       max-height: 500px;
     }
@@ -50,23 +61,29 @@
   tr:hover {
     background-color: #e0e0e0;
   }
+
   .sort.asc::after {
     content: " \2191";
   }
+
   .sort.desc::after {
     content: " \2193";
   }
+
   .drop-options {
     height: 20px;
     margin: 5px;
   }
+
   .table-pagination {
     text-align: center;
   }
+
   .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .row-count {
       display: inline-block;
     }
@@ -79,10 +96,10 @@
 }
 
 .theme-dark {
-  color: white !important;
-  background-color: #28282b;
-  transition: color 2s ease;
-  transition: background 2s ease;
+  color: $text-dark !important;
+  background-color: $background-dark;
+  transition: color 2s ease, background 2s ease;
+
   .table-main {
     min-height: 400px;
   }
@@ -95,9 +112,11 @@
     cursor: pointer;
     z-index: 10;
   }
+
   .display-none {
     visibility: hidden;
   }
+
   table {
     width: 100%;
     margin: 10px;
@@ -105,11 +124,11 @@
     border-spacing: 0;
     border-radius: 5px;
     overflow: hidden;
-    background: #28282b;
-    color: white;
-    box-shadow: 5px 5px 15px #141414, -5px -5px 15px #0f0c0c;
-    transition: color 2s ease;
-    transition: background 2s ease;
+    background: $background-dark;
+    color: $text-dark;
+    box-shadow: 5px 5px 15px $shadow-dark, -5px -5px 15px #0f0c0c;
+    transition: color 2s ease, background 2s ease;
+
     tbody {
       max-height: 500px;
     }
@@ -124,7 +143,7 @@
   }
 
   th {
-    background-color: #28282b;
+    background-color: $background-dark;
   }
 
   tr:hover {
@@ -134,10 +153,12 @@
   .table-pagination {
     text-align: center;
   }
+
   .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .row-count {
       display: inline-block;
     }
