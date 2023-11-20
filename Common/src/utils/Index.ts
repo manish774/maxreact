@@ -32,3 +32,20 @@ export const sortRecords = (records: any[], key: string, order: string) => {
 
   return sortedArray;
 };
+
+export const searchFromDictionary = (dictionary: any, searchValue: string) => {
+  if (!Object.keys(dictionary).length) {
+    return {};
+  }
+  const foundInDictionary: { [key: string]: any } = {};
+  for (let key in dictionary) {
+    if (
+      JSON.stringify(dictionary[key])
+        .toLocaleLowerCase()
+        .includes(searchValue.toLocaleLowerCase())
+    ) {
+      foundInDictionary[key] = dictionary[key];
+    }
+  }
+  return foundInDictionary;
+};

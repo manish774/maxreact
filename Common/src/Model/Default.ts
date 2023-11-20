@@ -19,6 +19,8 @@ export interface ColumnProps {
   searchable?: boolean;
   sortable?: boolean;
   hoverAction?: HoverActionProp[];
+  hideAble?: boolean;
+  hideOnstart?: boolean;
 }
 
 export interface TableProps {

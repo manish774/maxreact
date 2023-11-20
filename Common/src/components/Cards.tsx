@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./Table.scss";
+import Input from "./generic/Input";
+import { searchFromDictionary } from "../utils/Index";
 interface CardProps {
   listHeading: { name: string; value: string };
   dictionary: any;
+  enableCloseAction?: boolean;
   config?: any; //if config not passed , it will print all object properties
+  title?: string | JSX.Element;
 }
-const Cards = ({ listHeading, dictionary, config }: CardProps) => {
+const Cards = ({
+  listHeading,
+  dictionary,
+  config,
+  enableCloseAction = false,
+  title,
+}: CardProps) => {
   const dictionaryProperties = Object.keys(dictionary);
   const [dataObject, setDataObject] = useState<any>();
-
-  const prepareData = dictionaryProperties.map((item) => {
-    return { [item]: dictionary[item] };
-  });
 
   useEffect(() => {
     setDataObject(dictionary);
@@ -54,13 +60,29 @@ const Cards = ({ listHeading, dictionary, config }: CardProps) => {
     setDataObject("");
   };
 
+  const onSearch = (e: any) => {
+    const currentObject = structuredClone(dataObject);
+    const valuesFound = searchFromDictionary(
+      currentObject,
+      e?.target?.value || ""
+    );
+    setDataObject(valuesFound);
+  };
   return (
     dataObject && (
       <div className="table-container">
-        <div style={{ padding: "5px", border: "1px solid gray" }}>
-          <div style={{ textAlign: "right" }}>
-            <button onClick={closeList}>x</button>
-          </div>
+        <div>
+          <h3>{title}</h3>
+        </div>
+        <div>
+          <Input onchangeHandler={onSearch} value={""} placeholder="Search" />
+        </div>
+        <div style={{ padding: "5px", margin: "10px" }}>
+          {enableCloseAction && (
+            <div style={{ textAlign: "right" }}>
+              <button onClick={closeList}>x</button>
+            </div>
+          )}
           <div>
             <table>
               <thead>{prepareHeading}</thead>

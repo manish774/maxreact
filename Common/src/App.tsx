@@ -6,10 +6,14 @@ import Table from "./components/Table";
 import Cards from "./components/Cards";
 import { ColumnProps, tableConfig } from "./Model/Default";
 import "./Neu/default.scss";
+import Modal from "./components/Modal/Modal";
+import Select from "./components/generic/Select";
+import { Resizable } from "re-resizable";
 
 const App = () => {
-  const [selectedRow, setSelectedRow] = useState();
+  const [selectedRow, setSelectedRow] = useState(trip[0]);
   const [data, setData] = useState(trip);
+  const [dialogState, setDialogState] = useState<boolean>(false);
   const onClickName = (param: any) => {
     setSelectedRow({ ...param });
   };
@@ -94,7 +98,7 @@ const App = () => {
   const tripConfig: tableConfig = {
     paginationRequired: true,
     showHeaderCount: false,
-    title: <h3>Beautiful title</h3>,
+    title: <h3>Gokarna </h3>,
     columns: [
       {
         id: "name",
@@ -108,6 +112,9 @@ const App = () => {
       {
         id: "timing",
         name: "Open Time",
+        searchable: true,
+        hideAble: true,
+        hideOnstart: true,
       },
       {
         id: "day",
@@ -117,7 +124,7 @@ const App = () => {
       {
         id: "activities",
         name: "Activities to do",
-
+        searchable: true,
         render: (item: any) =>
           item?.activities?.map((activity: any) => {
             return <li>{activity}</li>;
@@ -126,21 +133,53 @@ const App = () => {
     ],
   };
   // ____________________________________
+
+  const openDialog = () => {
+    setDialogState((prev) => (prev === false ? true : false));
+  };
+
+  const selectHandler = (e: any) => {
+    console.log(e);
+  };
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ width: "60%" }}>
-        {/* <Table records={data || []} pageSize={10} config={tableConfig} /> */}
-        <Table records={data || []} pageSize={10} config={tripConfig} />
+    <>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <Resizable
+          defaultSize={{
+            width: "70%",
+            height: "90%",
+          }}
+          style={{ border: "1px dotted gray", margin: "2px" }}
+        >
+          <div>
+            {/* <Table records={data || []} pageSize={10} config={tableConfig} /> */}
+            <Table records={data || []} pageSize={10} config={tripConfig} />
+          </div>
+        </Resizable>
+        <Resizable
+          defaultSize={{
+            width: "30%",
+            height: "90%",
+          }}
+          style={{ border: "1px dotted gray", margin: "2px" }}
+        >
+          {selectedRow && (
+            <Cards
+              dictionary={selectedRow}
+              listHeading={{ name: "User stat", value: "values" }}
+            />
+          )}
+        </Resizable>
       </div>
-      <div style={{ width: "30%" }}>
-        {selectedRow && (
-          <Cards
-            dictionary={selectedRow}
-            listHeading={{ name: "User stat", value: "values" }}
-          />
-        )}
-      </div>
-    </div>
+      <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
+        <button onClick={openDialog}>Open dialog</button>
+        <Modal isDialogOpen={dialogState} />
+      </Resizable>
+    </>
   );
 };
 

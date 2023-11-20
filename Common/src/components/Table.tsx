@@ -10,6 +10,7 @@ import TableRows from "./TableRows";
 import { useDebounce } from "../hooks/hooks";
 import Toggle from "./Toggle";
 import Input from "./generic/Input";
+import Select from "./generic/Select";
 
 // import icon from "../Assets/icons/loader.gif";
 const Table = ({ records, config }: TableProps) => {
@@ -19,7 +20,7 @@ const Table = ({ records, config }: TableProps) => {
   const [rowCount, setRowCount] = useState(records?.length || 0);
   const [columnSortState, setColumnSortState] = useState<any>({});
   const [columnNames, setColumnNames] = useState<any>();
-  const [itemPerPage, setItemPerPage] = useState(paginationOptions[1]);
+  const [itemPerPage, setItemPerPage] = useState(paginationOptions[0]);
   const [searchText, setSearchText] = useState<string>("");
   const debounceSearch = useDebounce(searchText, 1000);
   const [searchInputLoading, setSearchInputLoading] = useState(true);
@@ -222,12 +223,17 @@ const Table = ({ records, config }: TableProps) => {
           </div>
         )}
         <div className="input-container">
-          <select onChange={changeItemPerPage}>
+          <Select
+            onchangeHandler={changeItemPerPage}
+            options={paginationOptions.map((p) => ({ name: p, value: p }))}
+            selected={itemPerPage}
+            label={"per page"}
+          />
+          {/* <select onChange={changeItemPerPage}>
             {paginationOptions.map((page) => (
               <option selected={itemPerPage === page}>{page}</option>
             ))}
-          </select>
-          <span style={{ marginLeft: "5px" }}>Item per page </span>
+          </select> */}
         </div>
       </div>
     </div>

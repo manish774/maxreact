@@ -53,3 +53,41 @@ button:active {
     inset 2px 2px 2px rgba(255, 255, 255, 0.075),
     inset 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
+
+.neumorphic-select {
+  position: relative;
+  width: 200px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px #d9d9d9, -10px -10px 20px #ffffff;
+  overflow: hidden;
+  .selected-option {
+    background-color: lightgray !important;
+  }
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: none;
+  appearance: none;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+.neumorphic-select::after {
+  content: "\25BC"; /* Unicode character for down arrow */
+  font-size: 20px;
+  color: #555;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.neumorphic-select:hover {
+  box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+}

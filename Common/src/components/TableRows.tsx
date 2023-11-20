@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ColumnProps } from "../Model/TableModel";
+import { ColumnProps } from "../Model/Default";
 
 interface RowProps {
   record: any;
