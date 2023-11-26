@@ -1,15 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
-import DATA from "./mocks/data.json";
+import { useState } from "react";
 import trip from "./mocks/Trip.json";
 import "./style.css";
-import Table from "./components/Table";
+import Table from "./components/Table/Table";
 import Cards from "./components/Cards";
-import { ColumnProps, tableConfig } from "./Model/Default";
+import { tableConfig } from "./Model/Default";
 import "./Neu/default.scss";
 import Modal from "./components/Modal/Modal";
-import Select from "./components/generic/Select";
 import { Resizable } from "re-resizable";
-
+import Tree from "./components/Tree/Tree";
+import TreeData from "./mocks/Tree.json";
 const App = () => {
   const [selectedRow, setSelectedRow] = useState(trip[0]);
   const [data, setData] = useState(trip);
@@ -99,6 +98,7 @@ const App = () => {
     paginationRequired: true,
     showHeaderCount: false,
     title: <h3>Gokarna </h3>,
+    minHeight: "400px",
     columns: [
       {
         id: "name",
@@ -141,6 +141,12 @@ const App = () => {
   const selectHandler = (e: any) => {
     console.log(e);
   };
+  // ____________________Tree______________--
+  const treeConfig: tableConfig = {
+    title: "Tree Table",
+    columns: [{ id: "name", name: "Name" }],
+  };
+  //____________________________________________
   return (
     <>
       <div
@@ -171,6 +177,7 @@ const App = () => {
             <Cards
               dictionary={selectedRow}
               listHeading={{ name: "User stat", value: "values" }}
+              enableCloseAction={true}
             />
           )}
         </Resizable>
@@ -178,6 +185,9 @@ const App = () => {
       <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
         <button onClick={openDialog}>Open dialog</button>
         <Modal isDialogOpen={dialogState} />
+      </Resizable>
+      <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
+        <Tree records={TreeData} config={treeConfig} pageSize={10} />
       </Resizable>
     </>
   );

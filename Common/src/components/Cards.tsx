@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Table.scss";
+import "./generic/Table/Table.scss";
 import Input from "./generic/Input";
 import { searchFromDictionary } from "../utils/Index";
 interface CardProps {
@@ -60,23 +60,13 @@ const Cards = ({
     setDataObject("");
   };
 
-  const onSearch = (e: any) => {
-    const currentObject = structuredClone(dataObject);
-    const valuesFound = searchFromDictionary(
-      currentObject,
-      e?.target?.value || ""
-    );
-    setDataObject(valuesFound);
-  };
   return (
     dataObject && (
       <div className="table-container">
         <div>
           <h3>{title}</h3>
         </div>
-        <div>
-          <Input onchangeHandler={onSearch} value={""} placeholder="Search" />
-        </div>
+
         <div style={{ padding: "5px", margin: "10px" }}>
           {enableCloseAction && (
             <div style={{ textAlign: "right" }}>

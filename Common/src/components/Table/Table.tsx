@@ -1,18 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { selectSubarray, sortRecords } from "../utils/Index";
-import "./Table.scss";
-import "../Neu/default.scss";
-import { paginationOptions } from "../utils/TableUtils";
-import { ASC, DESC } from "../utils/Index";
+import { selectSubarray, sortRecords } from "../../utils/Index";
+import "../generic/Table/Table.scss";
+import "../../Neu/default.scss";
+import { paginationOptions } from "../../utils/TableUtils";
+import { ASC, DESC } from "../../utils/Index";
 
-import { TableProps, ColumnProps, ThemeMode } from "../Model/Default";
+import { TableProps, ColumnProps, ThemeMode } from "../../Model/Default";
 import TableRows from "./TableRows";
-import { useDebounce } from "../hooks/hooks";
-import Toggle from "./Toggle";
-import Input from "./generic/Input";
-import Select from "./generic/Select";
+import { useDebounce } from "../../hooks/hooks";
+import Toggle from "../Toggle";
+import Input from "../generic/Input";
+import Select from "../generic/Select";
 
-// import icon from "../Assets/icons/loader.gif";
 const Table = ({ records, config }: TableProps) => {
   const [currentPagination, setCurrentPagination] = useState<any>(1);
   const [currentRecord, setCurrentRecords] = useState<any>([]);
@@ -192,7 +191,7 @@ const Table = ({ records, config }: TableProps) => {
         </div>
       </div>
       <div className="table-main">
-        <table>
+        <table style={{ minHeight: config?.minHeight || "" }}>
           <thead>
             <tr>{columnNames}</tr>
           </thead>

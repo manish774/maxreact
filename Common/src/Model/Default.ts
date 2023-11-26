@@ -3,9 +3,10 @@ export type ThemeMode = "dark" | "light";
 export interface tableConfig {
   paginationRequired?: boolean;
   mode?: ThemeMode;
-  title: JSX.Element;
+  title: string | JSX.Element;
   columns: ColumnProps[];
   showHeaderCount?: boolean;
+  minHeight?: string;
 }
 
 export interface HoverActionProp {
