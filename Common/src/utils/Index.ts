@@ -49,3 +49,36 @@ export const searchFromDictionary = (dictionary: any, searchValue: string) => {
   }
   return foundInDictionary;
 };
+
+export const getFileType = (file: any) => {
+  if (file) {
+    const selectedFile = file;
+    const fileType = selectedFile.type;
+
+    switch (fileType) {
+      case "image/jpeg":
+      case "image/png":
+      case "image/gif":
+        return "image";
+
+      case "audio/mpeg":
+      case "audio/wav":
+      case "audio/ogg":
+        return "audio";
+
+      case "video/mp4":
+      case "video/webm":
+      case "video/ogg":
+        return "video";
+
+      case "application/pdf":
+        return "other";
+
+      // Add more cases as needed
+
+      default:
+        console.log("Selected file type is not supported.");
+        break;
+    }
+  }
+};

@@ -9,6 +9,7 @@ import Modal from "./components/Modal/Modal";
 import { Resizable } from "re-resizable";
 import Tree from "./components/Tree/Tree";
 import TreeData from "./mocks/Tree.json";
+import Files from "./components/Files/Files";
 const App = () => {
   const [selectedRow, setSelectedRow] = useState(trip[0]);
   const [data, setData] = useState(trip);
@@ -195,6 +196,15 @@ const App = () => {
         <div style={{ width: "600px" }}>
           <Tree records={TreeData} config={treeConfig} pageSize={10} />
         </div>
+      </Resizable>
+      <Resizable
+        defaultSize={{
+          width: "70%",
+          height: "90%",
+        }}
+        style={{ border: "1px dotted gray", padding: "2px" }}
+      >
+        <Files />
       </Resizable>
     </>
   );

@@ -123,7 +123,6 @@ const Tree = ({ records, config, pageSize }: TableProps) => {
 
   useEffect(() => {
     if (searchText) {
-      debugger;
       const newRecords = records?.filter((rec: any) => {
         const searchValue = searchText?.toString().toLowerCase();
         return searchableColumns.some((column) => {
@@ -158,7 +157,6 @@ const Tree = ({ records, config, pageSize }: TableProps) => {
       currentIndexes?.startIndex,
       currentIndexes?.offset
     );
-    debugger;
     setCurrentRecords(paginatedRecords);
   }, [currentPagination, completeRecord, currentIndexes]);
 

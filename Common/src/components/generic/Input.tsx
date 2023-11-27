@@ -3,13 +3,14 @@ import { useDebounce } from "../../hooks/hooks";
 import "./generic.scss";
 interface InputProps {
   onchangeHandler: (value: string) => any;
-  type?: "number" | "text" | "email";
+  type?: "number" | "text" | "email" | "file";
   max?: number;
   min?: number;
   value: any;
   label?: JSX.Element | string | number;
   labelPosition?: "left" | "right" | "above" | "below";
   placeholder?: string;
+  multiple?: boolean;
 }
 
 const Input: React.FC<InputProps> = (props: InputProps) => {
@@ -59,6 +60,7 @@ const Input: React.FC<InputProps> = (props: InputProps) => {
         min={props?.min}
         max={props?.max}
         placeholder={props?.placeholder}
+        multiple={props?.multiple || false}
       />
     </>
   );
