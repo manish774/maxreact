@@ -144,7 +144,12 @@ const App = () => {
   // ____________________Tree______________--
   const treeConfig: tableConfig = {
     title: "Tree Table",
-    columns: [{ id: "name", name: "Name" }],
+    paginationRequired: true,
+    columns: [
+      { id: "name", name: "Name", searchable: true },
+      { id: "id", name: "Rec Name" },
+      { id: "shopName", name: "Shop Name" },
+    ],
   };
   //____________________________________________
   return (
@@ -182,12 +187,14 @@ const App = () => {
           )}
         </Resizable>
       </div>
-      <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
+      {/* <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
         <button onClick={openDialog}>Open dialog</button>
         <Modal isDialogOpen={dialogState} />
-      </Resizable>
+      </Resizable> */}
       <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
-        <Tree records={TreeData} config={treeConfig} pageSize={10} />
+        <div style={{ width: "600px" }}>
+          <Tree records={TreeData} config={treeConfig} pageSize={10} />
+        </div>
       </Resizable>
     </>
   );

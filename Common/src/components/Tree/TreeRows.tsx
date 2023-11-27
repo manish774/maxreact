@@ -1,5 +1,6 @@
 // TreeRows.jsx
 import React from "react";
+import TreeColumns from "./TreeColumns";
 
 const TreeRows = ({
   rowData,
@@ -7,10 +8,41 @@ const TreeRows = ({
   isExpanded,
   onToggleExpand,
   index,
+  columns,
+  hierarchyColumn,
 }: any) => {
+  // const prepreCoumns = columns.map((cellData: any) => {
+  //   <TreeColumns cellData={cellData} hierarchyColumn={hierarchyColumn}depth={depth} isExpanded={isExpanded} onToggleExpand={onToggleExpand} index={}/>;
+  // });
+
+  const prepareCells = columns.map((d: any, i: number) => {
+    return i === 0 ? (
+      <td width={"400px"} height={"30px"} key={rowData[d?.id]}>
+        <span
+          style={{
+            marginLeft: rowData?.children ? `${depth}px` : `${depth}px`,
+          }}
+        >
+          <span
+            onClick={onToggleExpand}
+            data-id={index}
+            style={{ cursor: "pointer" }}
+          >
+            {rowData?.children && (isExpanded ? "- " : "+ ")}
+          </span>
+          <span style={{ marginLeft: rowData?.children ? "0px" : "15px" }}>
+            {rowData[d?.id]}
+          </span>
+        </span>
+      </td>
+    ) : (
+      <td key={rowData[d?.id]}>{rowData[d?.id]}</td>
+    );
+  });
+
   return (
     <tr>
-      <td width={"400px"} height={"30px"}>
+      {/* <td width={"400px"} height={"30px"}>
         <span
           style={{
             marginLeft: rowData?.children ? `${depth}px` : `${depth}px`,
@@ -29,7 +61,8 @@ const TreeRows = ({
         </span>
       </td>
       <td>{rowData?.id}</td>
-      <td>{rowData?.shopName}</td>
+      <td>{rowData?.shopName}</td> */}
+      {prepareCells}
     </tr>
   );
 };

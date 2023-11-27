@@ -11,6 +11,8 @@ import { useDebounce } from "../../hooks/hooks";
 import Toggle from "../Toggle";
 import Input from "../generic/Input";
 import Select from "../generic/Select";
+import { TableHeader } from "../generic/Table/TableHeader";
+import TableFooter from "../generic/Table/TableFooter";
 
 const Table = ({ records, config }: TableProps) => {
   const [currentPagination, setCurrentPagination] = useState<any>(1);
@@ -22,9 +24,7 @@ const Table = ({ records, config }: TableProps) => {
   const [itemPerPage, setItemPerPage] = useState(paginationOptions[0]);
   const [searchText, setSearchText] = useState<string>("");
   const debounceSearch = useDebounce(searchText, 1000);
-  const [searchInputLoading, setSearchInputLoading] = useState(true);
   const [theme, setTheme] = useState<ThemeMode>("light");
-  const debounceTheme = useDebounce(theme, 2000);
   const [totalPage, setTotalPage] = useState(
     Math.ceil(completeRecord?.length / itemPerPage)
   );
@@ -132,7 +132,7 @@ const Table = ({ records, config }: TableProps) => {
 
   const handleInputChange = (e: any) => {
     if (e?.target?.value > totalPage) return e.preventDefault();
-    if (e?.target?.value) setCurrentPagination((prev: any) => e.target.value);
+    if (e?.target?.value) setCurrentPagination(() => e.target.value);
     // setFind(e.target.value);
   };
 
@@ -158,38 +158,17 @@ const Table = ({ records, config }: TableProps) => {
   const changeTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
+
   return (
     <div className={`table-container ${`theme-${theme}`}`}>
-      <div className="footer-container">
-        <div className="table-title">{title}</div>
-        <div>
-          {config?.mode && (
-            <div>
-              <Toggle
-                style={{ position: "relative", top: "0px" }}
-                label="Mode"
-                onChangeTheme={changeTheme}
-              />
-            </div>
-          )}
-        </div>
-        <div className="table-search">
-          <div className="input-container" style={{ textAlign: "right" }}>
-            <input
-              className="search"
-              onChange={searchInTable}
-              placeholder="search"
-              value={searchText}
-            />
-            <button
-              className={`clear-button ${!searchText && "display-none"}`}
-              onClick={clearInput}
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      </div>
+      <TableHeader
+        searchInTable={searchInTable}
+        title={title}
+        clearInput={clearInput}
+        searchText={searchText}
+        mode={config?.mode}
+        changeTheme={changeTheme}
+      />
       <div className="table-main">
         <table style={{ minHeight: config?.minHeight || "" }}>
           <thead>
@@ -205,36 +184,16 @@ const Table = ({ records, config }: TableProps) => {
           </tbody>
         </table>
       </div>
-      <div className="footer-container">
-        <div className="row-count">Total records ({rowCount})</div>
-        {config?.paginationRequired && (
-          <div className="table-pagination">
-            <div className="input-container">
-              <Input
-                onchangeHandler={handleInputChange}
-                type="number"
-                max={totalPage}
-                min={1}
-                value={currentPagination}
-              />
-              <span style={{ marginLeft: "5px" }}>of {totalPage}</span>
-            </div>
-          </div>
-        )}
-        <div className="input-container">
-          <Select
-            onchangeHandler={changeItemPerPage}
-            options={paginationOptions.map((p) => ({ name: p, value: p }))}
-            selected={itemPerPage}
-            label={"per page"}
-          />
-          {/* <select onChange={changeItemPerPage}>
-            {paginationOptions.map((page) => (
-              <option selected={itemPerPage === page}>{page}</option>
-            ))}
-          </select> */}
-        </div>
-      </div>
+      <TableFooter
+        rowCount={rowCount}
+        handleInputChange={handleInputChange}
+        totalPage={totalPage}
+        currentPagination={currentPagination}
+        paginationRequired={config?.paginationRequired || false}
+        changeItemPerPage={changeItemPerPage}
+        paginationOptions={paginationOptions}
+        itemPerPage={itemPerPage}
+      />
     </div>
   );
 };
