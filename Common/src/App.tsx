@@ -204,7 +204,7 @@ const App = () => {
         }}
         style={{ border: "1px dotted gray", padding: "2px" }}
       >
-        <Files />
+        <Files shouldPreview={true} isMultipleUpload={true} maximumFiles={20} />
       </Resizable>
     </>
   );

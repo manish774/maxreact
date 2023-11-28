@@ -52,22 +52,14 @@
 }
 
 /* Add Neumorphic styles to the preview button */
-button {
-  margin-top: 10px; /* Added margin to separate the button from the input */
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
 button:hover {
   background-color: #45a049;
 }
-
+.btn-remove {
+  float: right;
+  height: 20px;
+}
 .file-prev-container {
   font-size: 10px;
   display: flex;
