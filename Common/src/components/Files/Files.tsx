@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../generic/Input";
 import "./Files.scss";
 import { generateRandomString, getFileType } from "../../utils/Index";
@@ -8,6 +8,7 @@ type FilesProps = {
   maximumFiles?: number;
   maxOutError?: string;
   shouldPreview?: boolean;
+  placeholder?: string;
 };
 
 const Files = ({
@@ -15,6 +16,7 @@ const Files = ({
   maxOutError = `Maximum ${maximumFiles} files allowed`,
   shouldPreview = false,
   isMultipleUpload = false,
+  placeholder,
 }: FilesProps) => {
   const [selectedFiles, setSelectedFiles] = useState<any[]>([]);
   const [isFilesThere, setIsFilesThere] = useState<boolean>(false);
@@ -33,62 +35,57 @@ const Files = ({
         const id = generateRandomString(16);
         const type = getFileType(event.target.files[i]);
         const name = event.target.files[i]?.name;
+        const size = event.target.files[i]?.size;
         const file = {
           path: URL.createObjectURL(event.target.files[i]),
           type,
           name,
           id,
+          size,
         };
 
         isMultipleUpload
           ? setSelectedFiles((prev) => [...prev, file])
           : setSelectedFiles([file]);
-        setIsFilesThere(true);
       }
     }
   };
-
-  const preview = () => {
-    setPreviewEnable((prev) => (prev === true ? false : true));
-  };
-
   const removeFile = (e: any) => {
     setSelectedFiles(selectedFiles.filter((fil) => fil?.id !== e));
     if (selectedFiles?.length > 0) {
       setMaxError("");
     }
   };
+
+  useEffect(() => {
+    setIsFilesThere(selectedFiles?.length ? true : false);
+  }, [selectedFiles, removeFile]);
+
+  const preview = () => {
+    setPreviewEnable((prev) => (prev === true ? false : true));
+  };
+
   const previewFiles = selectedFiles.map((file, i) => {
-    return file?.type === "image" ? (
+    return (
       <div className="file-prev-container">
-        <div style={{ width: "100%" }}>
-          <button onClick={() => removeFile(file?.id)} className="btn-remove">
-            x
-          </button>
+        <button onClick={() => removeFile(file?.id)} className="btn-remove">
+          x
+        </button>
+        <div style={{ textAlign: "center" }} className="file">
+          {file?.type === "image" ? (
+            <img src={file?.path} />
+          ) : (
+            <div className="default-file-icon">&#9926;</div>
+          )}
         </div>
-        <div style={{ textAlign: "center" }}>
-          <div>
-            <img src={file?.path} style={{ width: "40px", height: "40px" }} />
-          </div>
-          <br />
-          <div>{i}</div>
+        <div data-tooltip={file?.name} className="file-name">
+          {file?.name}
         </div>
-      </div>
-    ) : (
-      <div className="file-prev-container">
-        <div style={{ width: "100%" }}>
-          <button onClick={() => removeFile(file?.id)} className="btn-remove">
-            x
-          </button>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "40px" }}>&#9926;</div>
-          <br />
-          <div>{i}</div>
-        </div>
+        <div>{file?.size}</div>
       </div>
     );
   });
+
   return (
     <>
       <div className="drag-drop-container">
@@ -99,7 +96,11 @@ const Files = ({
             onchangeHandler={onFileChange}
             multiple={isMultipleUpload}
           />
-          <h4>Select / Drag {isMultipleUpload ? "files" : "file"} here</h4>
+          {placeholder ? (
+            placeholder
+          ) : (
+            <h4>Select / Drag {isMultipleUpload ? "files" : "file"} here</h4>
+          )}
         </div>
         <div>
           {isFilesThere && "Files loaded"}
@@ -114,10 +115,7 @@ const Files = ({
         </div>
         <div></div>
         {shouldPreview && previewEnable && (
-          <div
-            className="preview-panel-files"
-            style={{ maxHeight: "300px", overflowY: "scroll" }}
-          >
+          <div className="preview-panel-files" style={{ maxHeight: "300px" }}>
             {previewFiles}
           </div>
         )}

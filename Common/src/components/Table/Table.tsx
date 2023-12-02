@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { selectSubarray, sortRecords } from "../../utils/Index";
+import {
+  generateRandomString,
+  selectSubarray,
+  sortRecords,
+} from "../../utils/Index";
 import "../generic/Table/Table.scss";
 import "../../Neu/default.scss";
 import { paginationOptions } from "../../utils/TableUtils";
@@ -71,6 +75,7 @@ const Table = ({ records, config }: TableProps) => {
             }
           }}
           className={`sort ${columnSortState[rec?.id]}`}
+          key={columnSortState[rec?.id]}
         >
           {rec?.name}
         </th>
@@ -140,9 +145,11 @@ const Table = ({ records, config }: TableProps) => {
     return <TableRows record={record} column={column} />;
   };
 
-  const rows = currentRecord?.map((record: any) => {
-    return <tr>{columns?.map((col) => createCellContent(record, col))}</tr>;
-  });
+  const rows = currentRecord?.map((record: any) => (
+    <tr key={generateRandomString(10)}>
+      {columns?.map((col) => createCellContent(record, col))}
+    </tr>
+  ));
 
   const changeItemPerPage = (e: any) => {
     setItemPerPage(parseInt(e?.target?.value));

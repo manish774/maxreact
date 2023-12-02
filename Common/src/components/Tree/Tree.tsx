@@ -9,7 +9,13 @@ import TableFooter from "../generic/Table/TableFooter";
 import { paginationOptions } from "../../utils/TableUtils";
 import { useDebounce } from "../../hooks/hooks";
 import { ASC, DESC, selectSubarray, sortRecords } from "../../utils/Index";
-
+/**
+ * Create tree table easily.
+ *
+ * @param {any[]} - Provide any array of object
+ * @param {config}  - Provide complete configuration of table
+ * @param {pageSize} - initial pagination size
+ */
 const Tree = ({ records, config, pageSize }: TableProps) => {
   const [expandedRows, setExpandedRows] = useState<any>([]);
   const [currentPagination, setCurrentPagination] = useState<any>(1);
@@ -63,8 +69,6 @@ const Tree = ({ records, config, pageSize }: TableProps) => {
 
   const prepareTreeRows = (data: any, isChildren: any, depth: any) => {
     return data.map((d: any, index: number) => {
-      console.log(Object.keys(columns), d);
-
       const col = Object.keys(columns[0]);
       const random = Math.random();
       const isRowExpanded = expandedRows.includes(

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ColumnProps } from "../../Model/Default";
+import { generateRandomString } from "../../utils/Index";
 
 interface RowProps {
   record: any;
@@ -70,7 +71,7 @@ const TableRows = ({ record, column }: RowProps) => {
   };
 
   return (
-    <td style={{ textAlign: "left" }}>
+    <td style={{ textAlign: "left" }} key={generateRandomString(10)}>
       {column?.render ? column?.render(record) : record[column?.id]}
       {prepareOptionsView()}
     </td>

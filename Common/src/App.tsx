@@ -142,6 +142,7 @@ const App = () => {
   const selectHandler = (e: any) => {
     console.log(e);
   };
+  Tree;
   // ____________________Tree______________--
   const treeConfig: tableConfig = {
     title: "Tree Table",

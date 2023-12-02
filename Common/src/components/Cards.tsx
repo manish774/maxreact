@@ -48,7 +48,7 @@ const Cards = ({
       : dictionaryProperties.map(
           (prop: any) =>
             dataObject && (
-              <tr>
+              <tr key={dataObject[prop]}>
                 <td>{prop}</td>
                 <td>{dataObject[prop]}</td>
               </tr>

@@ -53,14 +53,48 @@
 
 /* Add Neumorphic styles to the preview button */
 
+button {
+  height: 30px;
+  margin: 3px;
+}
 button:hover {
   background-color: #45a049;
 }
-.btn-remove {
-  float: right;
-  height: 20px;
-}
+
 .file-prev-container {
   font-size: 10px;
-  display: flex;
+  .btn-remove {
+    position: relative;
+    left: 30px;
+    top: 34px;
+    height: 20px;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+  }
+  .default-file-icon {
+    font-size: 40px;
+  }
+  .file-name {
+    display: inline-block;
+    max-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+  }
+  .file-name::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    display: none;
+  }
 }

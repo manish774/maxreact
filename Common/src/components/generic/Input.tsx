@@ -11,6 +11,7 @@ interface InputProps {
   labelPosition?: "left" | "right" | "above" | "below";
   placeholder?: string;
   multiple?: boolean;
+  otherProps?: Record<string, number>;
 }
 
 const Input: React.FC<InputProps> = (props: InputProps) => {
@@ -61,6 +62,7 @@ const Input: React.FC<InputProps> = (props: InputProps) => {
         max={props?.max}
         placeholder={props?.placeholder}
         multiple={props?.multiple || false}
+        {...props?.otherProps}
       />
     </>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { generateRandomString } from "../../utils/Index";
 
 type Options = {
   name: string | JSX.Element | number;
@@ -24,10 +25,10 @@ const Select = (props: SelectProps) => {
       (options || []).map((option) => (
         <option
           value={option?.value}
-          selected={`${selectedValue}` === `${option?.value}`}
           className={
             `${selectedValue}` === `${option?.value}` ? "selected-option" : ""
           }
+          key={generateRandomString(10)}
         >
           {option?.name}
         </option>
@@ -46,8 +47,9 @@ const Select = (props: SelectProps) => {
         }}
         id={`${props?.options[0]?.value}`}
         style={{ height: "40px" }}
+        value={selectedValue} // Set the selected value here
       >
-        <option>Select</option>
+        <option value="">Select</option>
         {prepareOption}
       </select>
     </div>
