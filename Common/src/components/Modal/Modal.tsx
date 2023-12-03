@@ -1,21 +1,65 @@
-import React, { useState } from "react";
-
-interface ModalState {
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import "./Modal.scss";
+interface ModalState<T extends ReactNode> {
   isDialogOpen: boolean;
+  onCloseAction?: () => any;
+  submitClick?: (d: any) => any;
+  component: T;
+  dialogSize?: "FULL" | "MEDIUM" | "SMALL";
+  closeLabel?: string;
+  submitLabel?: string;
+  enableFooter?: boolean;
 }
 
-const Modal = (props: ModalState) => {
-  // const [isDialogOpen, setIsDialogOpen] = useState(props?.isDialogOpen);
+const Modal = <T extends ReactNode>({
+  isDialogOpen,
+  onCloseAction,
+  component,
+  dialogSize = "MEDIUM",
+  submitClick,
+  closeLabel = "Close",
+  submitLabel = "Ok",
+  enableFooter = true,
+}: ModalState<T>) => {
+  const ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (isDialogOpen) {
+      ref?.current?.showModal();
+    } else {
+      ref?.current?.close();
+    }
+  }, [isDialogOpen]);
+
+  const closeModal = () => {
+    if (onCloseAction) {
+      onCloseAction();
+    }
+  };
+
+  const onSubmitClick = (d: any) => {
+    submitClick && submitClick(d);
+  };
 
   return (
-    <div>
-      {props?.isDialogOpen && (
-        <dialog open={props?.isDialogOpen}>
-          <p>This is a React dialog box.</p>
-          {/* <button onClick={closeDialog}>Close</button> */}
-        </dialog>
-      )}
-    </div>
+    <dialog ref={ref} className={dialogSize}>
+      <button className="close-top-button" onClick={closeModal}>
+        x
+      </button>
+      <div>
+        {component}
+        {enableFooter && (
+          <div className="footer">
+            <button onClick={onSubmitClick} className="submit-button">
+              {submitLabel}
+            </button>
+            <button onClick={closeModal} className="close-button">
+              {closeLabel}
+            </button>
+          </div>
+        )}
+      </div>
+    </dialog>
   );
 };
 

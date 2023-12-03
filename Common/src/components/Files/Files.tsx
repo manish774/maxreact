@@ -34,8 +34,8 @@ const Files = ({
       for (let i = 0; i < f?.length; i++) {
         const id = generateRandomString(16);
         const type = getFileType(event.target.files[i]);
-        const name = event.target.files[i]?.name;
-        const size = event.target.files[i]?.size;
+        const name = event?.target?.files[i]?.name;
+        const size = event?.target?.files[i]?.size;
         const file = {
           path: URL.createObjectURL(event.target.files[i]),
           type,

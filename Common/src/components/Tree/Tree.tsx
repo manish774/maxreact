@@ -8,7 +8,13 @@ import { TableHeader } from "../generic/Table/TableHeader";
 import TableFooter from "../generic/Table/TableFooter";
 import { paginationOptions } from "../../utils/TableUtils";
 import { useDebounce } from "../../hooks/hooks";
-import { ASC, DESC, selectSubarray, sortRecords } from "../../utils/Index";
+import {
+  ASC,
+  DESC,
+  generateRandomString,
+  selectSubarray,
+  sortRecords,
+} from "../../utils/Index";
 /**
  * Create tree table easily.
  *
@@ -27,9 +33,7 @@ const Tree = ({ records, config, pageSize }: TableProps) => {
   const [itemPerPage, setItemPerPage] = useState(paginationOptions[0]);
   const [searchText, setSearchText] = useState<string>("");
   const debounceSearch = useDebounce(searchText, 1000);
-  const [searchInputLoading, setSearchInputLoading] = useState(true);
   const [theme, setTheme] = useState<ThemeMode>("light");
-  const debounceTheme = useDebounce(theme, 2000);
   const [totalPage, setTotalPage] = useState(
     Math.ceil(completeRecord?.length / itemPerPage)
   );
@@ -182,11 +186,16 @@ const Tree = ({ records, config, pageSize }: TableProps) => {
         mode={""}
         changeTheme={changeTheme}
       />
-      <table>
+      <table key={generateRandomString(10)}>
         <thead>
           <tr>{columnNames}</tr>
         </thead>
         <tbody>{tableRows}</tbody>
+        {!completeRecord?.length && (
+          <tr>
+            <td colSpan={3}>No records found</td>
+          </tr>
+        )}
       </table>
       <TableFooter
         rowCount={rowCount}

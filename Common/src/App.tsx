@@ -116,6 +116,7 @@ const App = () => {
         searchable: true,
         hideAble: true,
         hideOnstart: true,
+        highLight: { color: "rebeccapurple" },
       },
       {
         id: "day",
@@ -125,6 +126,7 @@ const App = () => {
       {
         id: "activities",
         name: "Activities to do",
+        highLight: { color: "gray" },
         searchable: true,
         render: (item: any) =>
           item?.activities?.map((activity: any) => {
@@ -135,14 +137,10 @@ const App = () => {
   };
   // ____________________________________
 
-  const openDialog = () => {
-    setDialogState((prev) => (prev === false ? true : false));
-  };
-
   const selectHandler = (e: any) => {
     console.log(e);
   };
-  Tree;
+
   // ____________________Tree______________--
   const treeConfig: tableConfig = {
     title: "Tree Table",
@@ -163,7 +161,7 @@ const App = () => {
       >
         <Resizable
           defaultSize={{
-            width: "70%",
+            width: "60%",
             height: "90%",
           }}
           style={{ border: "1px dotted gray", margin: "2px" }}
@@ -189,12 +187,30 @@ const App = () => {
           )}
         </Resizable>
       </div>
-      {/* <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
-        <button onClick={openDialog}>Open dialog</button>
-        <Modal isDialogOpen={dialogState} />
-      </Resizable> */}
       <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
-        <div style={{ width: "600px" }}>
+        <button onClick={() => setDialogState(true)}>Open dialog</button>
+        <Modal
+          isDialogOpen={dialogState}
+          component={
+            <Files
+              shouldPreview={true}
+              isMultipleUpload={true}
+              maximumFiles={20}
+              placeholder="Drop your files here !:)"
+            />
+          }
+          closeLabel={"Cancel"}
+          submitLabel={"Submit"}
+          onCloseAction={() => setDialogState(false)}
+          dialogSize={"FULL"}
+          submitClick={() => {
+            setDialogState(false);
+          }}
+          enableFooter={false}
+        />
+      </Resizable>
+      <Resizable style={{ border: "1px dotted gray", margin: "2px" }}>
+        <div style={{ width: "80%" }}>
           <Tree records={TreeData} config={treeConfig} pageSize={10} />
         </div>
       </Resizable>
@@ -205,7 +221,12 @@ const App = () => {
         }}
         style={{ border: "1px dotted gray", padding: "2px" }}
       >
-        <Files shouldPreview={true} isMultipleUpload={true} maximumFiles={20} />
+        <Files
+          shouldPreview={true}
+          isMultipleUpload={true}
+          maximumFiles={20}
+          placeholder="Drop your files here !:)"
+        />
       </Resizable>
     </>
   );

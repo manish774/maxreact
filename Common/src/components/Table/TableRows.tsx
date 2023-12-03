@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ColumnProps } from "../../Model/Default";
+import { ColumnProps, tableConfig } from "../../Model/Default";
 import { generateRandomString } from "../../utils/Index";
 
 interface RowProps {
   record: any;
   column: ColumnProps;
+  config?: tableConfig;
+  columnNumber: number;
 }
-const TableRows = ({ record, column }: RowProps) => {
+const TableRows = ({ record, column, config, columnNumber }: RowProps) => {
   const [showRowOptions, setShowRowOptions] = useState<boolean>(false);
   const rowOptionsRef = useRef(null);
 
@@ -71,7 +73,16 @@ const TableRows = ({ record, column }: RowProps) => {
   };
 
   return (
-    <td style={{ textAlign: "left" }} key={generateRandomString(10)}>
+    <td
+      style={{
+        textAlign: "left",
+        borderLeft:
+          column?.highLight && `1px solid ${column?.highLight?.color}`,
+        borderRight:
+          column?.highLight && `1px solid ${column?.highLight?.color}`,
+      }}
+      key={generateRandomString(10)}
+    >
       {column?.render ? column?.render(record) : record[column?.id]}
       {prepareOptionsView()}
     </td>

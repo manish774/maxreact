@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 10px 10px 20px #d9d9d9, -10px -10px 20px #ffffff;
   transition: box-shadow 0.3s ease;
 }
@@ -18,6 +18,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  min-height: 15px;
   border: 2px dashed #ccc; /* Added border style */
   border-radius: 8px; /* Added border radius */
   padding: 10px; /* Added padding to visually separate the border */
@@ -52,14 +53,6 @@
 }
 
 /* Add Neumorphic styles to the preview button */
-
-button {
-  height: 30px;
-  margin: 3px;
-}
-button:hover {
-  background-color: #45a049;
-}
 
 .file-prev-container {
   font-size: 10px;

@@ -8,13 +8,9 @@ import "../generic/Table/Table.scss";
 import "../../Neu/default.scss";
 import { paginationOptions } from "../../utils/TableUtils";
 import { ASC, DESC } from "../../utils/Index";
-
 import { TableProps, ColumnProps, ThemeMode } from "../../Model/Default";
 import TableRows from "./TableRows";
 import { useDebounce } from "../../hooks/hooks";
-import Toggle from "../Toggle";
-import Input from "../generic/Input";
-import Select from "../generic/Select";
 import { TableHeader } from "../generic/Table/TableHeader";
 import TableFooter from "../generic/Table/TableFooter";
 
@@ -38,8 +34,6 @@ const Table = ({ records, config }: TableProps) => {
     offset: itemPerPage,
   });
 
-  const [find, setFind] = useState<string>(""); //to-do: use it in useEffect
-
   const { columns, title } = config; //To-do : make column name form this column and values from column render
 
   const sortableColumns = useMemo(
@@ -53,10 +47,6 @@ const Table = ({ records, config }: TableProps) => {
 
   useEffect(() => {
     const sortColumnObject: any = {};
-    // sortableColumns.forEach((col: any) => {
-    //   sortColumnObject[col] = ASC;
-    // }, []);
-
     setColumnSortState((prevColumnSortState: any) => {
       return { ...prevColumnSortState, ...sortColumnObject };
     });
@@ -64,8 +54,9 @@ const Table = ({ records, config }: TableProps) => {
 
   useEffect(() => {
     setColumnNames(() => {
-      return columns.map((rec) => (
+      return columns.map((rec, i) => (
         <th
+          style={{ background: rec?.highLight && rec?.highLight?.color }}
           onClick={() => {
             if (sortableColumns.includes(rec?.id)) {
               sortColumn(rec?.id, columnSortState[rec?.id]);
@@ -74,7 +65,7 @@ const Table = ({ records, config }: TableProps) => {
               }));
             }
           }}
-          className={`sort ${columnSortState[rec?.id]}`}
+          className={`sort ${columnSortState[rec?.id]} `}
           key={columnSortState[rec?.id]}
         >
           {rec?.name}
@@ -141,13 +132,24 @@ const Table = ({ records, config }: TableProps) => {
     // setFind(e.target.value);
   };
 
-  const createCellContent = (record: any, column: ColumnProps) => {
-    return <TableRows record={record} column={column} />;
+  const createCellContent = (
+    record: any,
+    column: ColumnProps,
+    index: number
+  ) => {
+    return (
+      <TableRows
+        record={record}
+        column={column}
+        config={config}
+        columnNumber={index}
+      />
+    );
   };
 
   const rows = currentRecord?.map((record: any) => (
     <tr key={generateRandomString(10)}>
-      {columns?.map((col) => createCellContent(record, col))}
+      {columns?.map((col, i) => createCellContent(record, col, i))}
     </tr>
   ));
 
@@ -177,7 +179,10 @@ const Table = ({ records, config }: TableProps) => {
         changeTheme={changeTheme}
       />
       <div className="table-main">
-        <table style={{ minHeight: config?.minHeight || "" }}>
+        <table
+          style={{ minHeight: config?.minHeight || "" }}
+          key={generateRandomString(10)}
+        >
           <thead>
             <tr>{columnNames}</tr>
           </thead>

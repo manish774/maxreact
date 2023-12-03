@@ -22,6 +22,7 @@ export interface ColumnProps {
   hoverAction?: HoverActionProp[];
   hideAble?: boolean;
   hideOnstart?: boolean;
+  highLight?: { color: string };
 }
 
 export interface TableProps {
