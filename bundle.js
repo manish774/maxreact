@@ -1021,7 +1021,7 @@ var TableRows = function TableRows(_ref) {
               },
               style: {
                 height: "20px",
-                width: "30px"
+                width: "200px"
               },
               children: option.name
             }, option.name);
