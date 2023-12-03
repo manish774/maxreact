@@ -224,44 +224,39 @@ var App = function App() {
   };
   //____________________________________________
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
-      style: {
-        display: "flex"
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
+      defaultSize: {
+        width: "100%",
+        height: "90%"
       },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
-        defaultSize: {
-          width: "60%",
-          height: "90%"
-        },
-        style: {
-          border: "1px dotted gray",
-          margin: "2px"
-        },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_Table_Table__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            records: data || [],
-            pageSize: 10,
-            config: tripConfig
-          })
+      style: {
+        border: "1px dotted gray",
+        margin: "2px"
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_Table_Table__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          records: data || [],
+          pageSize: 10,
+          config: tripConfig
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
-        defaultSize: {
-          width: "30%",
-          height: "90%"
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
+      defaultSize: {
+        width: "100%",
+        height: "90%"
+      },
+      style: {
+        border: "1px dotted gray",
+        margin: "2px"
+      },
+      children: selectedRow && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_Cards__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        dictionary: selectedRow,
+        listHeading: {
+          name: "User stat",
+          value: "values"
         },
-        style: {
-          border: "1px dotted gray",
-          margin: "2px"
-        },
-        children: selectedRow && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_Cards__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          dictionary: selectedRow,
-          listHeading: {
-            name: "User stat",
-            value: "values"
-          },
-          enableCloseAction: true
-        })
-      })]
+        enableCloseAction: true
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
       style: {
         border: "1px dotted gray",
