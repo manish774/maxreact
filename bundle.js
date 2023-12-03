@@ -1012,12 +1012,16 @@ var TableRows = function TableRows(_ref) {
             position: "absolute"
           },
           children: column === null || column === void 0 ? void 0 : column.hoverAction.map(function (option) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               className: "cursor-pointer drop-options",
               onClick: function onClick(e) {
                 e.stopPropagation();
                 option === null || option === void 0 || option.onclick(record);
                 setShowRowOptions(false);
+              },
+              style: {
+                height: "20px",
+                width: "30px"
               },
               children: option.name
             }, option.name);
