@@ -284,7 +284,7 @@ var App = function App() {
         submitClick: function submitClick() {
           setDialogState(false);
         },
-        enableFooter: false
+        enableFooter: true
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(re_resizable__WEBPACK_IMPORTED_MODULE_7__.Resizable, {
       style: {
